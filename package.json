@@ -9,10 +9,10 @@
     "email": "hello@e2b.dev",
     "url": "https://e2b.dev"
   },
-  "bugs": "https://github.com/e2b-dev/agent-protocol/issues",
+  "bugs": "https://github.com/e2b-dev/agent-protocol-sdk-js/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/e2b-dev/agent-protocol/tree/main/agent/js"
+    "url": "https://github.com/e2b-dev/agent-protocol-sdk-js"
   },
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
@@ -26,7 +26,6 @@
     "@types/express": "^4.17.17",
     "@types/js-yaml": "^4.0.5",
     "@types/node": "^20.4.1",
-    "@types/uuid": "^9.0.2",
     "prettier": "^3.0.0",
     "tsup": "^7.1.0",
     "typescript": "^5.1.6"
@@ -50,6 +49,7 @@
     "wrapper"
   ],
   "dependencies": {
+    "@types/uuid": "^9.0.2",
     "express": "^4.18.2",
     "express-openapi-validator": "^5.0.4",
     "js-yaml": "^4.1.0",
