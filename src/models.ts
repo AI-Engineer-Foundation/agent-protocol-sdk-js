@@ -31,6 +31,13 @@ export enum StepStatus {
 }
 
 export interface Step {
+  /**
+   * The name of the task step
+   */
+  name?: string
+  /**
+   * Output of the task step
+   */
   output?: StepOutput
   /**
    * A list of artifacts that the step has produced.
@@ -60,6 +67,13 @@ export interface StepRequestBody {
 }
 
 export interface StepResult {
+  /**
+   * The name of the step
+   */
+  name?: string
+  /**
+   * Output of the step
+   */
   output?: StepOutput
   /**
    * A list of artifacts that the step has produced.

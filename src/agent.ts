@@ -192,6 +192,7 @@ export const executeAgentTaskStep = async (
     task_id: taskId,
     step_id: uuid(),
     input: body?.input ?? null,
+    name: stepResult.name,
     output: stepResult.output ?? null,
     artifacts: stepResult.artifacts ?? [],
     is_last: stepResult.is_last ?? false,
