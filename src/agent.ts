@@ -22,6 +22,7 @@ import {
   RouteRegisterFn,
   RouteContext,
 } from "./api";
+import { Router } from 'express';
 
 /**
  * A function that handles a step in a task.
@@ -72,8 +73,8 @@ export const createAgentTask = async (
   tasks.push([task, stepHandler])
   return task
 }
-const registerCreateAgentTask: RouteRegisterFn = (app: ApiApp) => {
-  return app.post('/agent/tasks', (req, res) => {
+const registerCreateAgentTask: RouteRegisterFn = (router: Router) => {
+  router.post('/agent/tasks', (req, res) => {
     void (async () => {
       try {
         const task = await createAgentTask(req.body)
@@ -93,8 +94,8 @@ const registerCreateAgentTask: RouteRegisterFn = (app: ApiApp) => {
 export const listAgentTaskIDs = async (): Promise<string[]> => {
   return tasks.map(([task, _]) => task.task_id)
 }
-const registerListAgentTaskIDs: RouteRegisterFn = (app: ApiApp) => {
-  return app.get('/agent/tasks', (req, res) => {
+const registerListAgentTaskIDs: RouteRegisterFn = (router: Router) => {
+  router.get('/agent/tasks', (req, res) => {
     void (async () => {
       try {
         const ids = await listAgentTaskIDs()
@@ -119,8 +120,8 @@ export const getAgentTask = async (taskId: string): Promise<Task> => {
   }
   return task[0]
 }
-const registerGetAgentTask: RouteRegisterFn = (app: ApiApp) => {
-  return app.get('/agent/tasks/:task_id', (req, res) => {
+const registerGetAgentTask: RouteRegisterFn = (router: Router) => {
+  router.get('/agent/tasks/:task_id', (req, res) => {
     void (async () => {
       try {
         const task = await getAgentTask(req.params.task_id)
@@ -147,8 +148,8 @@ export const listAgentTaskSteps = async (taskId: string): Promise<string[]> => {
     .filter((step) => step.task_id === taskId)
     .map((step) => step.step_id)
 }
-const registerListAgentTaskSteps: RouteRegisterFn = (app: ApiApp) => {
-  return app.get('/agent/tasks/:task_id/steps', (req, res) => {
+const registerListAgentTaskSteps: RouteRegisterFn = (router: Router) => {
+  router.get('/agent/tasks/:task_id/steps', (req, res) => {
     void (async () => {
       try {
         const ids = await listAgentTaskSteps(req.params.task_id)
@@ -196,8 +197,8 @@ export const executeAgentTaskStep = async (
   steps.push(step)
   return step
 }
-const registerExecuteAgentTaskStep: RouteRegisterFn = (app: ApiApp) => {
-  return app.post('/agent/tasks/:task_id/steps', (req, res) => {
+const registerExecuteAgentTaskStep: RouteRegisterFn = (router: Router) => {
+  router.post('/agent/tasks/:task_id/steps', (req, res) => {
     void (async () => {
       try {
         const step = await executeAgentTaskStep(req.params.task_id, req.body)
@@ -230,8 +231,8 @@ export const getAgentTaskStep = async (
   }
   return step
 }
-const registerGetAgentTaskStep: RouteRegisterFn = (app: ApiApp) => {
-  return app.get('/agent/tasks/:task_id/steps/:step_id', (req, res) => {
+const registerGetAgentTaskStep: RouteRegisterFn = (router: Router) => {
+  router.get('/agent/tasks/:task_id/steps/:step_id', (req, res) => {
     void (async () => {
       try {
         const step = await getAgentTaskStep(
@@ -253,8 +254,8 @@ export const getArtifacts = async (
   const task = await getAgentTask(taskId);
   return task.artifacts;
 }
-const registerGetArtifacts: RouteRegisterFn = (app: ApiApp) => {
-  return app.get('/agent/tasks/:task_id/artifacts', (req, res) => {
+const registerGetArtifacts: RouteRegisterFn = (router: Router) => {
+  router.get('/agent/tasks/:task_id/artifacts', (req, res) => {
     void (async () => {
       const taskId = req.params.task_id
       try {
@@ -263,7 +264,7 @@ const registerGetArtifacts: RouteRegisterFn = (app: ApiApp) => {
         const page_size = Number(req.query['page_size']) || 10
   
         if (!artifacts) {
-          return res.status(200).send({
+          res.status(200).send({
             artifacts: [],
             pagination: {
               total_items: 0,
@@ -355,8 +356,8 @@ export const createArtifact = async (
   fs.writeFileSync(artifactFolderPath, file.buffer)
   return artifact
 }
-const registerCreateArtifact: RouteRegisterFn = (app: ApiApp, context: RouteContext) => {
-  return app.post('/agent/tasks/:task_id/artifacts', (req, res) => {
+const registerCreateArtifact: RouteRegisterFn = (router: Router, context: RouteContext) => {
+  router.post('/agent/tasks/:task_id/artifacts', (req, res) => {
     void (async () => {
       try {
         const taskId = req.params.task_id
@@ -364,7 +365,7 @@ const registerCreateArtifact: RouteRegisterFn = (app: ApiApp, context: RouteCont
 
         const task = tasks.find(([{ task_id }]) => task_id == taskId)
         if (!task) {
-          return res
+          res
             .status(404)
             .json({ message: 'Unable to find task with the provided id' })
         }
@@ -405,8 +406,8 @@ export const getTaskArtifact = async (
   }
   return artifact
 }
-const registerGetTaskArtifact: RouteRegisterFn = (app: ApiApp, context: RouteContext) => {
-  return app.get('/agent/tasks/:task_id/artifacts/:artifact_id', (req, res) => {
+const registerGetTaskArtifact: RouteRegisterFn = (router: Router, context: RouteContext) => {
+  router.get('/agent/tasks/:task_id/artifacts/:artifact_id', (req, res) => {
     void (async () => {
       const taskId = req.params.task_id
       const artifactId = req.params.artifact_id
@@ -439,10 +440,11 @@ export class Agent {
   ) { }
 
   static handleTask(
-    taskHandler: TaskHandler,
+    _taskHandler: TaskHandler,
     config: Partial<AgentConfig>
   ): Agent {
-    return new Agent(taskHandler, {
+    taskHandler = _taskHandler
+    return new Agent(_taskHandler, {
       workspace: config.workspace || defaultAgentConfig.workspace,
       port: config.port || defaultAgentConfig.port
     });
