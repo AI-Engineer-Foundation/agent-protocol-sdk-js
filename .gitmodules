@@ -1,0 +1,3 @@
+[submodule "agent-protocol"]
+	path = agent-protocol
+	url = https://github.com/AI-Engineers-Foundation/agent-protocol
