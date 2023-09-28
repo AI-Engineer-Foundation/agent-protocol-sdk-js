@@ -440,14 +440,17 @@ export class Agent {
 
   static handleTask(
     taskHandler: TaskHandler,
-    config: AgentConfig = defaultAgentConfig
+    config: Partial<AgentConfig>
   ): Agent {
-    return new Agent(taskHandler, config);
+    return new Agent(taskHandler, {
+      workspace: config.workspace || defaultAgentConfig.workspace,
+      port: config.port || defaultAgentConfig.port
+    });
   }
 
   start(port?: number): void {
     const config: ApiConfig = {
-      port: port || this.config.port,
+      port: port || this.config.port || defaultAgentConfig.port,
       routes: [
         registerCreateAgentTask,
         registerListAgentTaskIDs,
