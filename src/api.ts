@@ -3,7 +3,7 @@ import yaml from 'js-yaml'
 import express from 'express'
 import * as core from 'express-serve-static-core';
 
-import spec from '../../../schemas/openapi.yml'
+import spec from '../../agent-protocol/schemas/openapi.yml'
 
 export type ApiApp = core.Express;
 

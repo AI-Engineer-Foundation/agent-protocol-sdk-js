@@ -1,7 +1,7 @@
 
 import { v4 as uuid } from 'uuid'
-import fs from 'fs'
-import path from 'path'
+import * as fs from 'fs'
+import * as path from 'path'
 
 import {
   type TaskInput,
