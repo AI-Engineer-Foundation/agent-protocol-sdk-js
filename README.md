@@ -41,3 +41,12 @@ Agent.handleTask(taskHandler).start()
 ## Docs
 
 You can find more info and examples in the [docs](https://agentprotocol.ai/sdks/js).
+
+## Contributing
+```bash
+git clone https://github.com/AI-Engineers-Foundation/agent-protocol-sdk-js
+cd ./agent-protocol-sdk-js
+git submodule update --init
+npm install
+npm run build
+```

@@ -6,7 +6,13 @@ export type TaskInput = any
 /**
  * Artifact that the task has produced. Any value is allowed.
  */
-export type Artifact = any
+export type Artifact = {
+  artifact_id: string,
+  agent_created: boolean,
+  file_name: string,
+  relative_path: string | null,
+  created_at: string
+}
 
 /**
  * Input parameters for the task step. Any value is allowed.
@@ -18,7 +24,20 @@ export type StepInput = any
  */
 export type StepOutput = any
 
+export enum StepStatus {
+  CREATED = "created",
+  RUNNING = "running",
+  COMPLETED = "completed"
+}
+
 export interface Step {
+  /**
+   * The name of the task step
+   */
+  name?: string
+  /**
+   * Output of the task step
+   */
   output?: StepOutput
   /**
    * A list of artifacts that the step has produced.
@@ -37,6 +56,10 @@ export interface Step {
    * The ID of the task step.
    */
   step_id: string
+  /**
+   * Current status of step
+   */
+  status: StepStatus
 }
 
 export interface StepRequestBody {
@@ -44,6 +67,13 @@ export interface StepRequestBody {
 }
 
 export interface StepResult {
+  /**
+   * The name of the step
+   */
+  name?: string
+  /**
+   * Output of the step
+   */
   output?: StepOutput
   /**
    * A list of artifacts that the step has produced.
