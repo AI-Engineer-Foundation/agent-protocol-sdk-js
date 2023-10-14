@@ -2,7 +2,7 @@ name: Build and Publish JS SDK Package
 
 on:
   push:
-    tags: [js-sdk-v*]
+    tags: [v*]
 
 permissions:
   contents: write
@@ -21,15 +21,15 @@ jobs:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
           cache: npm
-          cache-dependency-path: agent/js/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
-        working-directory: ./agent/js
+        working-directory: .
         run: npm ci
 
       - name: Publish package
         run: npm publish --access=public
-        working-directory: ./agent/js
+        working-directory: .
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

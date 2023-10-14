@@ -1,18 +1,18 @@
 {
   "name": "agent-protocol",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "API for interacting with Agent",
-  "homepage": "https://e2b.dev",
+  "homepage": "https://agentprotocol.ai",
   "license": "MIT",
   "author": {
-    "name": "e2b",
-    "email": "hello@e2b.dev",
-    "url": "https://e2b.dev"
+    "name": "aiengfoundation",
+    "email": "aiengfoundation@gmail.com",
+    "url": "https://aie.foundation"
   },
-  "bugs": "https://github.com/e2b-dev/agent-protocol-sdk-js/issues",
+  "bugs": "https://github.com/AI-Engineer-Foundation/agent-protocol-sdk-js/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/e2b-dev/agent-protocol-sdk-js"
+    "url": "https://github.com/AI-Engineer-Foundation/agent-protocol-sdk-js"
   },
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
