@@ -1,6 +1,6 @@
 {
   "name": "agent-protocol",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "API for interacting with Agent",
   "homepage": "https://agentprotocol.ai",
   "license": "MIT",
