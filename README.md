@@ -1,3 +1,4 @@
+# THIS REPO HAS BEEN MERGED INTO THE MAIN REPO: https://github.com/AI-Engineer-Foundation/agent-protocol/tree/main/packages/sdk/js
 # Agent Communication Protocol - JavaScript/TypeScript SDK
 
 This SDK implements the Agent Communication Protocol in JavaScript/TypeScript
